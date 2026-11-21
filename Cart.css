@@ -1,0 +1,395 @@
+/* ===== Keranjang belanja: dimuat SETELAH style.css ===== */
+
+/* Ikon keranjang di navbar */
+.cart-btn {
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  transition: color 0.2s, background-color 0.2s;
+}
+
+.cart-btn:hover {
+  color: var(--red);
+  background: var(--soft);
+}
+
+.cart-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+.page-bar .cart-btn {
+  margin-left: auto;
+}
+
+.cart-badge {
+  position: absolute;
+  top: -2px;
+  right: -4px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border: 2px solid var(--bg);
+  border-radius: 999px;
+  box-sizing: content-box;
+  background: var(--red);
+  color: var(--white);
+  font: 700 0.6875rem/18px var(--font-body);
+  text-align: center;
+}
+
+.cart-badge[hidden] {
+  display: none;
+}
+
+.cart-badge.bump {
+  animation: cart-bump 0.5s ease;
+}
+
+.cart-btn.bump svg {
+  animation: cart-wiggle 0.5s ease;
+}
+
+@keyframes cart-bump {
+  40% { scale: 1.5; }
+}
+
+@keyframes cart-wiggle {
+  25% { rotate: -14deg; }
+  60% { rotate: 10deg; }
+}
+
+/* Tombol "Tambah ke Keranjang" di setiap kartu menu (selalu terlihat, tidak ikut terbalik) */
+.card {
+  min-height: 17rem;
+}
+
+.card-body {
+  padding-bottom: 4.75rem;
+}
+
+.card-more {
+  min-height: 17rem;
+}
+
+.btn-add {
+  position: absolute;
+  z-index: 3;
+  right: var(--space-2);
+  bottom: var(--space-2);
+  left: var(--space-2);
+  min-height: 44px;
+  font-size: 0.9375rem;
+}
+
+.btn-add.is-added {
+  animation: cart-pop 0.4s ease;
+}
+
+@keyframes cart-pop {
+  50% { scale: 1.05; }
+}
+
+/* Panel samping dari kanan */
+.cart-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  background: rgb(0 0 0 / 0.55);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+
+.cart-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  width: min(100%, 26rem);
+  background: var(--bg);
+  border-left: 1px solid var(--line);
+  box-shadow: -12px 0 32px rgb(0 0 0 / 0.3);
+  translate: 100% 0;
+  visibility: hidden;
+  transition: translate 0.4s cubic-bezier(0.22, 1, 0.36, 1), visibility 0s 0.4s;
+}
+
+.cart-open {
+  overflow: hidden;
+}
+
+.cart-open .cart-overlay {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.cart-open .cart-drawer {
+  translate: 0 0;
+  visibility: visible;
+  transition: translate 0.4s cubic-bezier(0.22, 1, 0.36, 1), visibility 0s;
+}
+
+.cart-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--line);
+}
+
+.cart-head h2 {
+  margin: 0;
+  font-size: 1.375rem;
+}
+
+.cart-close,
+.cart-remove {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.cart-close:hover,
+.cart-remove:hover {
+  color: var(--red);
+  background: var(--soft);
+}
+
+.cart-close svg,
+.cart-remove svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.cart-body {
+  flex: 1;
+  padding: var(--space-2) var(--space-3);
+  overflow-y: auto;
+}
+
+.cart-empty {
+  margin: var(--space-5) 0;
+  color: var(--muted);
+  text-align: center;
+}
+
+.cart-empty::before {
+  content: '🛒';
+  display: block;
+  margin-bottom: var(--space-1);
+  font-size: 2.5rem;
+}
+
+.cart-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cart-line {
+  display: grid;
+  grid-template-columns: 64px 1fr auto;
+  gap: var(--space-2);
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--line);
+  animation: cart-in 0.35s ease backwards;
+}
+
+@keyframes cart-in {
+  from { opacity: 0; translate: 16px 0; }
+}
+
+.cart-thumb {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: var(--soft);
+}
+
+.cart-thumb::before {
+  content: '🍜';
+  grid-area: 1 / 1;
+  font-size: 1.5rem;
+}
+
+.cart-thumb img {
+  grid-area: 1 / 1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cart-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.cart-unit {
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+.cart-qty {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+}
+
+.cart-qty button {
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: inherit;
+  font: 700 1.125rem var(--font-body);
+  cursor: pointer;
+}
+
+.cart-qty button:hover {
+  color: var(--red);
+}
+
+.cart-qty span {
+  min-width: 1.75rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.cart-side {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.cart-foot {
+  padding: var(--space-2) var(--space-3) var(--space-3);
+  border-top: 1px solid var(--line);
+}
+
+.cart-total {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: var(--space-2);
+}
+
+.cart-total strong {
+  font: 800 1.5rem var(--font-head);
+  color: var(--red);
+}
+
+.cart-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-1);
+}
+
+.cart-actions .btn {
+  padding: 0 var(--space-1);
+  font-size: 0.9375rem;
+}
+
+.cart-actions .btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.cart-confirm {
+  margin-bottom: var(--space-2);
+  padding: var(--space-2);
+  border: 1px dashed var(--red);
+  border-radius: var(--radius);
+}
+
+.cart-confirm p {
+  margin-bottom: var(--space-1);
+  font-weight: 500;
+}
+
+.cart-confirm div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+
+.cart-confirm .btn {
+  min-height: 40px;
+  padding: 0 var(--space-2);
+  font-size: 0.875rem;
+}
+
+.cart-drawer :focus-visible {
+  outline-offset: 2px;
+}
+
+/* Notifikasi singkat saat produk ditambahkan */
+.cart-toast {
+  position: fixed;
+  bottom: var(--space-3);
+  left: 50%;
+  z-index: 60;
+  padding: 0.625rem 1.25rem;
+  border-radius: 999px;
+  background: var(--red);
+  color: var(--white);
+  font-weight: 700;
+  pointer-events: none;
+  opacity: 0;
+  translate: -50% 16px;
+  transition: opacity 0.3s ease, translate 0.3s ease;
+}
+
+.cart-toast.show {
+  opacity: 1;
+  translate: -50% 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cart-overlay,
+  .cart-drawer,
+  .cart-open .cart-drawer,
+  .cart-toast {
+    transition: none;
+  }
+
+  .cart-badge.bump,
+  .cart-btn.bump svg,
+  .btn-add.is-added,
+  .cart-line {
+    animation: none;
+  }
+}
