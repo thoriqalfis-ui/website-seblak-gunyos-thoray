@@ -581,3 +581,90 @@
     animation: none;
   }
 }
+
+/* ===== Nomor WhatsApp, status, dan bukti transaksi ===== */
+.cart-name label:not(:first-child) {
+  margin-top: var(--space-1);
+}
+
+.cart-last {
+  display: flex;
+  margin: 0 auto;
+}
+
+.receipt-head .receipt-check {
+  display: grid;
+  place-items: center;
+  margin-bottom: 0.25rem;
+}
+
+.receipt-check svg {
+  width: 56px;
+  height: 56px;
+  fill: none;
+  stroke: #1F9D55;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.receipt-check circle {
+  stroke-dasharray: 151;
+  animation: receipt-draw 0.8s ease backwards;
+}
+
+.receipt-check path {
+  stroke-dasharray: 40;
+  animation: receipt-draw 0.5s 0.6s ease backwards;
+}
+
+@keyframes receipt-draw {
+  from { stroke-dashoffset: 151; }
+}
+
+.receipt-status {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: var(--space-2);
+}
+
+.r-chip {
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.r-chip.is-ok,
+.r-chip.is-paid {
+  background: #E3F6EA;
+  color: #14753D;
+}
+
+.r-chip.is-pending {
+  background: #FFF1D6;
+  color: #9A5B00;
+}
+
+.receipt-actions .btn {
+  gap: 0.5rem;
+}
+
+.receipt-actions .btn svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .receipt-check circle,
+  .receipt-check path {
+    animation: none;
+  }
+}
