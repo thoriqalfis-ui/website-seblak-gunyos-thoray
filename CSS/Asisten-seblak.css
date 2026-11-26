@@ -1,0 +1,428 @@
+/* =========================================================
+   ASISTEN SEBLAK GUNYOS THORAY - STYLESHEET
+   ========================================================= */
+
+#asb,
+#asb * {
+  box-sizing: border-box;
+}
+
+#asb {
+  --r: #C4290F;
+  --o: #F26B1D;
+  --cream: #FFF6E9;
+  --line: #EBD5B7;
+  --ink: #3A1F14;
+  --mut: #7A5A48;
+
+  position: fixed;
+  right: max(1rem, env(safe-area-inset-right));
+  bottom: max(1rem, env(safe-area-inset-bottom));
+  z-index: 999;
+  font: 400 15px/1.45 "DM Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: var(--ink);
+}
+
+#asb button {
+  font: inherit;
+}
+
+/* --- Tombol Melayang (FAB) --- */
+#asb .asb-fab {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  margin-left: auto;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--r), var(--o));
+  color: #fff;
+  font-size: 26px;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgb(196 41 15 / 0.45);
+  transition: transform 0.2s ease;
+}
+
+#asb .asb-fab:hover {
+  transform: scale(1.07);
+}
+
+#asb .asb-fab::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 2px solid var(--o);
+  border-radius: 50%;
+  animation: asb-ping 2.4s ease-out infinite;
+  pointer-events: none;
+}
+
+#asb .asb-x {
+  display: none;
+  font-size: 22px;
+}
+
+#asb.is-open .asb-ic {
+  display: none;
+}
+
+#asb.is-open .asb-x {
+  display: block;
+}
+
+#asb.is-open .asb-fab::after {
+  animation: none;
+  opacity: 0;
+}
+
+/* --- Balon Ajakan --- */
+#asb .asb-tip {
+  position: absolute;
+  right: 70px;
+  bottom: 9px;
+  padding: 0.5rem 0.85rem;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--cream);
+  box-shadow: 0 6px 18px rgb(58 31 20 / 0.2);
+  font-size: 0.85rem;
+  white-space: nowrap;
+  animation: asb-in 0.4s ease;
+}
+
+#asb .asb-tip[hidden],
+#asb.is-open .asb-tip {
+  display: none;
+}
+
+/* --- Jendela Chat --- */
+#asb .asb-win {
+  position: absolute;
+  right: 0;
+  bottom: 70px;
+  display: flex;
+  flex-direction: column;
+  width: min(22.5rem, calc(100vw - 2rem));
+  height: min(34rem, calc(100dvh - 7.5rem));
+  overflow: hidden;
+  border-radius: 20px;
+  background: var(--cream);
+  box-shadow: 0 20px 50px rgb(58 31 20 / 0.35);
+  transform-origin: bottom right;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px) scale(0.96);
+  transition: opacity 0.25s ease, transform 0.25s ease, visibility 0s 0.25s;
+}
+
+#asb.is-open .asb-win {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+/* --- Header Chat --- */
+#asb .asb-head {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.8rem 0.9rem;
+  color: #fff;
+  background: linear-gradient(135deg, var(--r), var(--o));
+}
+
+#asb .asb-logo {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 0.2);
+  font-size: 22px;
+}
+
+#asb .asb-head div {
+  flex: 1;
+  min-width: 0;
+}
+
+#asb .asb-head b {
+  display: block;
+  font-size: 1rem;
+}
+
+#asb .asb-head small {
+  font-size: 0.78rem;
+  opacity: 0.92;
+}
+
+#asb .asb-ico {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: #fff;
+  font-size: 17px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+#asb .asb-ico:hover {
+  background: rgb(255 255 255 / 0.22);
+}
+
+/* --- Area Percakapan --- */
+#asb .asb-log {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 0.9rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scroll-behavior: smooth;
+}
+
+#asb .asb-msg {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.45rem;
+  max-width: 92%;
+  animation: asb-in 0.3s ease;
+}
+
+#asb .asb-me {
+  align-self: flex-end;
+}
+
+#asb .asb-av {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #fff;
+  border: 1px solid var(--line);
+  font-size: 15px;
+}
+
+#asb .asb-bubble {
+  padding: 0.55rem 0.85rem;
+  border: 1px solid var(--line);
+  border-radius: 16px 16px 16px 4px;
+  background: #fff;
+}
+
+#asb .asb-me .asb-bubble {
+  border: 0;
+  border-radius: 16px 16px 4px 16px;
+  background: linear-gradient(135deg, var(--r), #E8481F);
+  color: #fff;
+}
+
+/* --- Animasi Mengetik --- */
+#asb .asb-dots {
+  display: flex;
+  gap: 4px;
+  padding: 0.35rem 0.1rem;
+}
+
+#asb .asb-dots i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--o);
+  animation: asb-bounce 1s infinite;
+}
+
+#asb .asb-dots i:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+#asb .asb-dots i:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+/* --- Tombol Pilihan (Chips) --- */
+#asb .asb-opts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  padding-left: 2rem;
+  animation: asb-in 0.3s ease;
+}
+
+#asb .asb-chip {
+  padding: 0.5rem 0.85rem;
+  border: 1.5px solid var(--r);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--r);
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+#asb .asb-chip:hover {
+  background: #FFE9DC;
+  transform: translateY(-1px);
+}
+
+#asb .asb-chip[aria-pressed="true"],
+#asb .asb-go {
+  border-color: var(--r);
+  background: var(--r);
+  color: #fff;
+}
+
+#asb .asb-chip small {
+  font-weight: 500;
+  opacity: 0.85;
+}
+
+#asb .asb-go {
+  width: 100%;
+  margin-top: 0.2rem;
+}
+
+#asb .asb-go:hover {
+  background: #A81F08;
+}
+
+/* --- Kartu Hasil Rekomendasi --- */
+#asb .asb-card {
+  width: 100%;
+  padding: 0.95rem;
+  border: 1.5px solid var(--o);
+  border-radius: 16px;
+  background: #fff;
+}
+
+#asb .asb-tag {
+  color: var(--o);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+#asb .asb-title {
+  display: block;
+  margin: 0.15rem 0 0.5rem;
+  color: var(--r);
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+
+#asb .asb-line {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.35rem 0;
+  border-bottom: 1px dashed var(--line);
+  font-size: 0.9rem;
+}
+
+#asb .asb-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin: 0.65rem 0 0.45rem;
+  font-weight: 700;
+}
+
+#asb .asb-total b {
+  color: var(--r);
+  font-size: 1.3rem;
+}
+
+#asb .asb-note {
+  margin-bottom: 0.75rem;
+  color: var(--mut);
+  font-size: 0.82rem;
+}
+
+#asb .asb-wa {
+  display: block;
+  padding: 0.75rem 1rem;
+  border-radius: 999px;
+  background: #148F4A;
+  color: #fff;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+#asb .asb-wa:hover {
+  background: #0F7A3E;
+}
+
+/* --- Keyframes & Responsif --- */
+@keyframes asb-ping {
+  from {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  to {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+
+@keyframes asb-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+@keyframes asb-bounce {
+  0%, 60%, 100% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(-5px);
+  }
+}
+
+@media (max-width: 480px) {
+  #asb .asb-win {
+    position: fixed;
+    right: 0.75rem;
+    left: 0.75rem;
+    bottom: calc(5rem + env(safe-area-inset-bottom));
+    width: auto;
+    height: min(34rem, calc(100dvh - 7rem));
+  }
+
+  #asb .asb-tip {
+    white-space: normal;
+    width: 11.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #asb *,
+  #asb *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media print {
+  #asb {
+    display: none;
+  }
+}

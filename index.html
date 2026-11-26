@@ -14,9 +14,36 @@
     rel="stylesheet">
   <link rel="stylesheet" href="./CSS/style.css">
   <link rel="stylesheet" href="./CSS/Cart.css">
+  <link rel="stylesheet" href="./CSS/Asisten-seblak.css">
 </head>
 
 <body>
+
+  <!-- Asisten Seblak -->
+  <div id="asb">
+    <div class="asb-tip" hidden>Bingung pilih menu? <b>Tanya aku!</b></div>
+
+    <section class="asb-win" id="asb-win" role="dialog" aria-label="Asisten Seblak" aria-hidden="true" inert>
+      <header class="asb-head">
+        <span class="asb-logo" aria-hidden="true">🍜</span>
+        <div>
+          <b>Asisten Seblak</b>
+          <small>Seblak Gunyos Thoray</small>
+        </div>
+        <button type="button" class="asb-ico" data-act="restart" aria-label="Mulai ulang percakapan"
+          title="Ulangi">↻</button>
+        <button type="button" class="asb-ico" data-act="close" aria-label="Tutup asisten" title="Tutup">✕</button>
+      </header>
+
+      <div class="asb-log" role="log" aria-live="polite"></div>
+    </section>
+
+    <button type="button" class="asb-fab" aria-expanded="false" aria-controls="asb-win"
+      aria-label="Buka Asisten Seblak">
+      <span class="asb-ic" aria-hidden="true">🌶️</span>
+      <span class="asb-x" aria-hidden="true">✕</span>
+    </button>
+  </div>
 
   <svg width="0" height="0" style="position:absolute" aria-hidden="true">
     <symbol id="i-light" viewBox="0 0 24 24">
@@ -173,6 +200,7 @@
   <script src="./JavaScript/script.js"></script>
   <script src="./JavaScript/Cart.js"></script>
   <script src="./JavaScript/Reveal.js"></script>
+  <script src="./JavaScript/Asisten-seblak.js"></script>
 
 </body>
 
